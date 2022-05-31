@@ -38,10 +38,12 @@ class UsersController extends Controller
     }
     //用户资料修改页
     public function edit(User $user){
+        $this->authorize('update', $user);
         return view('users.edit',compact('user'));
     }
     //用户资料修改逻辑
     public function update(User $user,Request $request){
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
@@ -58,5 +60,14 @@ class UsersController extends Controller
 
         return redirect()->route('users.show', $user);
     }
-
+    //权限过滤，未登录只能访问指定路由
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store']
+        ]);
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
 }
