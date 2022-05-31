@@ -1,5 +1,5 @@
 <?php
-
+//用户注册相关
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
