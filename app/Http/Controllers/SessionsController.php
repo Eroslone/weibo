@@ -18,7 +18,7 @@ class SessionsController extends Controller
             'password' => 'required'
         ]);
         //在数据库中进行匹配验证
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($credentials,$request->has('remember'))){
             //登陆成功后的操作
             session()->flash('sucess','登陆成功，欢迎回来');
             return redirect()->route('users.show',[Auth::user()]);
