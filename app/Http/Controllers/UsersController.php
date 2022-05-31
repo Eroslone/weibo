@@ -16,15 +16,7 @@ class UsersController extends Controller
     {
         return view('users.show', compact('user'));
     }
-/*    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|unique:users|max:50',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|confirmed|min:6'
-        ]);
-        return;
-    }*/
+//对用户提交的数据进行验证
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -38,6 +30,8 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        //用户注册成功后自动登录
+        Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]);
     }
