@@ -60,14 +60,18 @@ class UsersController extends Controller
 
         return redirect()->route('users.show', $user);
     }
-    //权限过滤，未登录只能访问指定路由
+    //权限过滤，未登录、已登录只能访问指定路由
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store','index']//这里为啥已登录不能查看用户列表？
         ]);
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+    }
+    public function index(){
+        $users = User::all();
+        return view('users.index',compact('users'));
     }
 }
