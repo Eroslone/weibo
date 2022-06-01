@@ -49,7 +49,7 @@ class UsersController extends Controller
         $subject = "感谢注册 Weibo 应用！请确认你的邮箱。";
 
         Mail::send($view, $data, function ($message) use ($to, $subject) {
-            $message-->to($to)->subject($subject);
+            $message->to($to)->subject($subject);
         });
     }
     public function confirmEmail($token)
@@ -98,7 +98,7 @@ class UsersController extends Controller
             'only' => ['create']
         ]);
         // 限流 一个小时内只能提交 10 次请求；
-        $this->middleware('throttle:10,60', [
+        $this->middleware('throttle:30,10', [
             'only' => ['store']
         ]);
     }

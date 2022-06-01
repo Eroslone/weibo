@@ -22,7 +22,7 @@ class PasswordController extends Controller
         $this->middleware('throttle:6,1', [
             'only' => ['showLinkRequestForm']
         ]);
-        $this->middleware('throttle:5,10', [
+        $this->middleware('throttle:5,1', [
             'only' => ['sendResetLinkEmail']
         ]);
     }
